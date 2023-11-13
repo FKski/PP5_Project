@@ -17,19 +17,19 @@ function SaveClient() {
     }
 
     
-    let newClient = {
-        ClientNo : ClientNo,
-        InputName : document.getElementById('InputName').value,
-        InputLastName : document.getElementById('InputLastName').value,
-        InputStreet : document.getElementById('InputStreet').value,
-        InputHouseNumber : document.getElementById('InputHouseNumber').value,
-        InputFlatNumber : document.getElementById('InputFlatNumber').value,
-        InputCity : document.getElementById('InputCity').value,
-        InputZIP : document.getElementById('InputZIP').value,
-        InputSex : selectedSex,
-        InputNotes : document.getElementById('InputNotes').checked,
-        InputActive : document.getElementById('InputActive').checked
-    }
+    let newClient = new Client();
+    newClient.ClientNo = ClientNo;
+    newClient.name = document.getElementById('InputName').value;
+    newClient.surname = document.getElementById('InputLastName').value;
+    newClient.street = document.getElementById('InputStreet').value;
+    newClient.HouseNumber = document.getElementById('InputHouseNumber').value;
+    newClient.FlatNumber = document.getElementById('InputFlatNumber').value;
+    newClient.City = document.getElementById('InputCity').value;
+    newClient.ZIP = document.getElementById('InputZIP').value;
+    newClient.Sex = selectedSex;
+    newClient.Notes = document.getElementById('InputNotes').value;
+    newClient.active = document.getElementById('InputActive').checked;
+
 
     // Zapisz dane do konsoli
     console.log('Client:', newClient);
@@ -39,7 +39,7 @@ function SaveClient() {
     let ul=document.getElementById("list-group");
     ul.innerHTML = ''
     clients.forEach((e)=>{
-        ul.innerHTML += `<li class="list-group-item" onclick="editClientFunc(${e.ClientNo })">Name: ${e.InputName}, Last Name: ${e.InputLastName}</li>`;
+        ul.innerHTML += `<li class="list-group-item" onclick="editClientFunc(${e.ClientNo })">${e.clientDetails()}</li>`;
     })
     ClientNo += 1;
     document.getElementById('InputName').value = null;
@@ -52,27 +52,39 @@ function SaveClient() {
       document.getElementById('InputSex').value = null;
       document.getElementById('InputNotes').value = null;
       document.getElementById('InputActive').checked = null;
+
+      
   }
+  
 
 function SaveModified(ModifyClientNo){
-  let modifiedClient = {
-    ClientNo : ModifyClientNo,
-    InputName : document.getElementById('InputName').value,
-    InputLastName : document.getElementById('InputLastName').value,
-    InputStreet : document.getElementById('InputStreet').value,
-    InputHouseNumber : document.getElementById('InputHouseNumber').value,
-    InputFlatNumber : document.getElementById('InputFlatNumber').value,
-    InputCity : document.getElementById('InputCity').value,
-    InputZIP : document.getElementById('InputZIP').value,
-    InputSex : document.getElementById('InputSex').value,
-    InputNotes : document.getElementById('InputNotes').checked,
-    InputActive : document.getElementById('InputActive').checked
-}
+  const SexCheck = document.querySelectorAll('input[name="SEX"]');
+    let selectedSex;
+    for (const radioButton of SexCheck) {
+      if (radioButton.checked) {
+        selectedSex = radioButton.value;
+          break;
+      }
+    }
+
+  let modifiedClient = clients[ModifyClientNo]
+  modifiedClient.ClientNo = ModifyClientNo;
+  modifiedClient.name = document.getElementById('InputName').value;
+  modifiedClient.surname = document.getElementById('InputLastName').value;
+  modifiedClient.street = document.getElementById('InputStreet').value;
+  modifiedClient.HouseNumber = document.getElementById('InputHouseNumber').value;
+  modifiedClient.FlatNumber = document.getElementById('InputFlatNumber').value;
+  modifiedClient.City = document.getElementById('InputCity').value;
+  modifiedClient.ZIP = document.getElementById('InputZIP').value;
+  modifiedClient.Sex = selectedSex;
+  modifiedClient.Notes = document.getElementById('InputNotes').value;
+  modifiedClient.active = document.getElementById('InputActive').checked;
+
   clients[ModifyClientNo] = modifiedClient;
   let ul=document.getElementById("list-group");
     ul.innerHTML = ''
     clients.forEach((e)=>{
-        ul.innerHTML += `<li class="list-group-item" onclick="editClientFunc(${e.ClientNo })">Name: ${e.InputName}, Last Name: ${e.InputLastName}</li>`;
+        ul.innerHTML += `<li class="list-group-item" onclick="editClientFunc(${e.ClientNo })">${e.clientDetails()}</li>`;
     })
   clients.forEach(e=>{console.log(e)})
 
@@ -105,31 +117,19 @@ function editClientFunc(ClientNo){
 
   clients.forEach(e => {
     if (e.ClientNo == ClientNo) {
-      let loadedClient = {
-        ClientNo: e.ClientNo,
-        InputName: e.InputName,
-        InputLastName: e.InputLastName,
-        InputStreet: e.InputStreet,
-        InputHouseNumber: e.InputHouseNumber,
-        InputFlatNumber: e.InputFlatNumber,
-        InputCity: e.InputCity,
-        InputZIP: e.InputZIP,
-        InputSex: e.InputSex,
-        InputNotes: e.InputNotes,
-        InputActive: e.InputActive
-      }
+      let loadedClient = clients[ClientNo]
 
       // Wypełnij pola formularza danymi z konsoli
-      document.getElementById('InputName').value = loadedClient.InputName;
-      document.getElementById('InputLastName').value = loadedClient.InputLastName;
-      document.getElementById('InputStreet').value = loadedClient.InputStreet;
-      document.getElementById('InputHouseNumber').value = loadedClient.InputHouseNumber;
-      document.getElementById('InputFlatNumber').value = loadedClient.InputFlatNumber;
-      document.getElementById('InputCity').value = loadedClient.InputCity;
-      document.getElementById('InputZIP').value = loadedClient.InputZIP;
-      document.getElementById('InputSex').value = loadedClient.InputSex;
-      document.getElementById('InputNotes').value = loadedClient.InputNotes;
-      document.getElementById('InputActive').checked = loadedClient.InputActive;
+      document.getElementById('InputName').value = loadedClient.name;
+      document.getElementById('InputLastName').value = loadedClient.surname;
+      document.getElementById('InputStreet').value = loadedClient.street;
+      document.getElementById('InputHouseNumber').value = loadedClient.HouseNumber;
+      document.getElementById('InputFlatNumber').value = loadedClient.FlatNumber;
+      document.getElementById('InputCity').value = loadedClient.City;
+      document.getElementById('InputZIP').value = loadedClient.ZIP;
+      document.getElementById('InputSex').value = loadedClient.Sex;
+      document.getElementById('InputNotes').value = loadedClient.Notes;
+      document.getElementById('InputActive').checked = loadedClient.active;
       document.getElementById('InputName').setAttribute('readonly', true);
       document.getElementById('InputLastName').setAttribute('readonly', true);
 
