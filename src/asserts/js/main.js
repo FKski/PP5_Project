@@ -51,16 +51,7 @@ function SaveModified(ModifyClientNo) {
         ul.innerHTML += `<li class="list-group-item" onclick="editClientFunc(${e.ClientNo})">${e.clientDetails()}</li>`;
     });
     clients.forEach(e => { console.log(e); });
-    getElementById('InputName').value = modifiedClient.name;
-    getElementById('InputLastName').value = modifiedClient.surname;
-    getElementById('InputStreet').value = modifiedClient.street;
-    getElementById('InputHouseNumber').value = modifiedClient.HouseNumber;
-    getElementById('InputFlatNumber').value = modifiedClient.FlatNumber;
-    getElementById('InputCity').value = modifiedClient.City;
-    getElementById('InputZIP').value = modifiedClient.ZIP;
-    getElementById('InputSex').value = modifiedClient.Sex;
-    getElementById('InputNotes').value = modifiedClient.Notes;
-    getElementById('InputActive').checked = modifiedClient.active;
+    Back();
     getElementById("client_create_form").style.display = "none";
     getElementById("client_list").style.display = "block";
     getElementById("modifyButton").style.display = "none";
@@ -128,6 +119,17 @@ function Back() {
     getElementById("saveButton").style.display = "none";
     getElementById('InputName').removeAttribute('readonly');
     getElementById('InputLastName').removeAttribute('readonly');
+}
+function Login() {
+    if (getElementById("unlockPasswd").value === "Passwd1") {
+        getElementById("client_list").style.display = 'block';
+        getElementById("login").style.display = 'none';
+        getElementById("unlockPasswd").value = "";
+    }
+}
+function LockPage() {
+    getElementById("client_list").style.display = 'none';
+    getElementById("login").style.display = 'block';
 }
 function getElementById(element) {
     return document.getElementById(element);

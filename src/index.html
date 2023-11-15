@@ -15,8 +15,9 @@
   </head>
   <body>
 
-    <div id = "client_list">
+    <div id = "client_list" style="display: none;">
         <form>
+          <button type="button" id="LockButton" onclick="(LockPage())">Lock</button>
           <ul id="list-group">
         
           </ul>
@@ -94,6 +95,17 @@
           <button type="button" id="modifyButton" style="display: none;" onclick="(SaveModified(ModifyClientNo))">Modify client</button>
           <!-- <button type="button" id="loadButton">Wczytaj z konsoli</button> -->
         </form>
+    </div>
+
+    <div id="login">
+      <form>
+        <label for="unlockPasswd" class="form-label">Password</label>
+        <input type="password" id="unlockPasswd" class="form-control" aria-describedby="passwordHelpBlock">
+        <div id="passwordHelpBlock" class="form-text">
+          Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+        </div>
+        <button type="button" id="LoginButton" onclick="(Login())">Unlock</button>
+      </form>
     </div>
       
           <!-- Optional JavaScript -->
