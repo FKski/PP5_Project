@@ -1,7 +1,11 @@
 let clients:Array<Client> = [];
 let ClientNo:number = 0;
-let ModifyClientNo:Number = 0;
+let ModifyClientNo:number = 0;
 let ModifyClientObj:number = 0;
+
+let acivities:Array<Activity> = [];
+let activityNo:number = 0;
+
 
 
 
@@ -28,10 +32,10 @@ function SaveClient() {
     clients.push(newClient)
     getElementById("client_create_form").style.display = 'none';
     getElementById("client_list").style.display = 'block';;
-    let ul=getElementById("list-group");
+    let ul=getElementById("clients-group");
     ul.innerHTML = ''
     clients.forEach((e)=>{
-        ul.innerHTML += `<li class="list-group-item" onclick="editClientFunc(${e.ClientNo })">${e.clientDetails()}</li>`;
+        ul.innerHTML += `<li class="clients-group-item" onclick="editClientFunc(${e.ClientNo })">${e.clientDetails()}</li>`;
     })
     ClientNo += 1;
     Back();
@@ -56,10 +60,10 @@ function SaveModified(ModifyClientNo:number){
   modifiedClient.active = getElementById('InputActive').checked;
 
   clients[ModifyClientNo] = modifiedClient;
-  let ul=getElementById("list-group");
+  let ul=getElementById("clients-group");
     ul.innerHTML = ''
     clients.forEach((e)=>{
-        ul.innerHTML += `<li class="list-group-item" onclick="editClientFunc(${e.ClientNo })">${e.clientDetails()}</li>`;
+        ul.innerHTML += `<li class="clients-group-item" onclick="editClientFunc(${e.ClientNo })">${e.clientDetails()}</li>`;
     })
   clients.forEach(e=>{console.log(e)})
 
@@ -93,7 +97,7 @@ function editClientFunc(ClientNo:number){
       getElementById('InputFlatNumber').value = loadedClient.FlatNumber;
       getElementById('InputCity').value = loadedClient.City;
       getElementById('InputZIP').value = loadedClient.ZIP;
-      document.getElementsByName("SEX").forEach((element: HTMLElement) => {
+      getElementsByName("SEX").forEach((element: HTMLElement) => {
         // Sprawdź, czy element jest inputem typu radio
         if (element instanceof HTMLInputElement && element.type === "radio" && element.value === loadedClient.Sex) {
             element.checked;
@@ -128,7 +132,7 @@ function editClientFunc(ClientNo:number){
     getElementById('InputFlatNumber').value = client.FlatNumber;
     getElementById('InputCity').value = client.City;
     getElementById('InputZIP').value = client.ZIP;
-    document.getElementsByName("SEX").forEach((element: HTMLElement) => {
+    getElementsByName("SEX").forEach((element: HTMLElement) => {
       // Sprawdź, czy element jest inputem typu radio
       if (element instanceof HTMLInputElement && element.type === "radio" && element.value === "Female") {
           element.checked;
@@ -146,20 +150,64 @@ function editClientFunc(ClientNo:number){
   }
 
   function Login(){
-    if (getElementById("unlockPasswd").value === "Passwd1") {
-      getElementById("client_list").style.display = 'block';
+    if (getElementById("unlockPasswd").value === "") {
+      getElementById("menu").style.display = 'block';
       getElementById("login").style.display = 'none';
       getElementById("unlockPasswd").value = "";
     }
   }
-  
+
   function LockPage(){
-      getElementById("client_list").style.display = 'none';
+      getElementById("menu").style.display = 'none';
       getElementById("login").style.display = 'block';
     
   }
+  
+  function ShowClientsScreen(){
+    getElementById("menu").style.display = 'none';
+    getElementById("client_list").style.display = 'block';
+  }
+  function ShowActivitiesScreen(){
+    getElementById("menu").style.display = 'none';
+    getElementById("activites_list").style.display = 'block';
+  }
 
+  function ShowMenu(){
+    getElementById("menu").style.display = 'block';
+    getElementById("client_list").style.display = 'none';
+    getElementById("activities_list").style.display = 'none';
+  }
 
+  function CreateNewActivity(){
+    getElementById("activity_create_form").style.display = 'block';
+    getElementById("activites_list").style.display = 'none';
+
+    console.log("Create actv")
+  }
+
+  function saveActivity(){
+    let newActivity =  new Activity();
+    newActivity.ActivityNo = activityNo;
+    newActivity.Name = getElementById('inputActivityName').value;
+    newActivity.ActivityDay = getElementById('activityDaySelect').value;
+    newActivity.ActivityHour = getElementById('activityHourSelect').value;
+
+    console.log(newActivity);
+    acivities.push(newActivity);
+    getElementById("activity_create_form").style.display = 'none';
+    getElementById("activites_list").style.display = 'block';
+    let ul=getElementById("activites-group");
+    ul.innerHTML = ''
+    acivities.forEach((e)=>{
+        ul.innerHTML += `<li class="activities-group-item" onclick="showAddClientToActivity(${e.ActivityNo})">${e.ActivityDetails()}</li>`;
+    })
+    activityNo += 1;
+    }
+  
+  function showAddClientToActivity(ActivityNo :number){
+    console.log("showed screen")
+  }
+  
   function getElementById(element: string): HTMLInputElement{
     return document.getElementById(element) as HTMLInputElement;
   }
@@ -169,14 +217,3 @@ function editClientFunc(ClientNo:number){
   function getElementsByName(element: string): NodeListOf<HTMLElement>{
     return document.getElementsByName(element) as NodeListOf<HTMLElement>;
   }
-
-  function getButtons() {
-
-
-    document.getElementsByName("SEX").forEach((element: HTMLElement) => {
-        // Sprawdź, czy element jest inputem typu radio
-        if (element instanceof HTMLInputElement && element.type === "radio" && element.value === "Female") {
-            element.checked;
-        }
-    });
-}
