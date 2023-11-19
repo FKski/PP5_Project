@@ -3,7 +3,7 @@ let ClientNo:number = 0;
 let ModifyClientNo:number = 0;
 let ModifyClientObj:number = 0;
 
-let acivities:Array<Activity> = [];
+let activities:Array<Activity> = [];
 let activityNo:number = 0;
 
 
@@ -137,6 +137,8 @@ function editClientFunc(ClientNo:number){
       if (element instanceof HTMLInputElement && element.type === "radio" && element.value === "Female") {
           element.checked;
       }
+      
+
   });
     getElementById('InputNotes').value = client.Notes;
     getElementById('InputActive').checked = client.active;
@@ -147,6 +149,7 @@ function editClientFunc(ClientNo:number){
  getElementById('InputName').removeAttribute('readonly');
  getElementById('InputLastName').removeAttribute('readonly');
  
+
   }
 
   function Login(){
@@ -169,7 +172,7 @@ function editClientFunc(ClientNo:number){
   }
   function ShowActivitiesScreen(){
     getElementById("menu").style.display = 'none';
-    getElementById("activites_list").style.display = 'block';
+    getElementById("activities_list").style.display = 'block';
   }
 
   function ShowMenu(){
@@ -180,7 +183,7 @@ function editClientFunc(ClientNo:number){
 
   function CreateNewActivity(){
     getElementById("activity_create_form").style.display = 'block';
-    getElementById("activites_list").style.display = 'none';
+    getElementById("activities_list").style.display = 'none';
 
     console.log("Create actv")
   }
@@ -191,21 +194,89 @@ function editClientFunc(ClientNo:number){
     newActivity.Name = getElementById('inputActivityName').value;
     newActivity.ActivityDay = getElementById('activityDaySelect').value;
     newActivity.ActivityHour = getElementById('activityHourSelect').value;
+    newActivity.MaxClients = +getElementById('inputMaxClients').value;
 
     console.log(newActivity);
-    acivities.push(newActivity);
+    activities.push(newActivity);
     getElementById("activity_create_form").style.display = 'none';
-    getElementById("activites_list").style.display = 'block';
+    getElementById("activities_list").style.display = 'block';
     let ul=getElementById("activites-group");
     ul.innerHTML = ''
-    acivities.forEach((e)=>{
-        ul.innerHTML += `<li class="activities-group-item" onclick="showAddClientToActivity(${e.ActivityNo})">${e.ActivityDetails()}</li>`;
+    activities.forEach((e)=>{
+        ul.innerHTML += `<li class="activities-group-item" onclick="showAddClientToActivity(${e.ActivityNo})">${e.ActivityDetails()}  </li>`;
+        // <button onclick="showAddClientToActivity(${e.ActivityNo})">Add clients</button>
     })
     activityNo += 1;
     }
   
   function showAddClientToActivity(ActivityNo :number){
-    console.log("showed screen")
+    getElementById("activities_list").style.display = 'none';
+    getElementById("client_add_to_activity").style.display = 'block';
+
+    let actv=activities[ActivityNo]
+    getElementById('SignedClients').innerHTML  = `Signed clients:  ${actv.SignedClients} / ${actv.MaxClients}`;
+
+    let ul=getElementById("clients-add-group");
+    ul.innerHTML = ''
+    clients.forEach((e)=>{      
+      if (e.active==true && activities[ActivityNo].ClientsList.indexOf(e)==-1) {
+        ul.innerHTML += `<li class="clients-group-item" onclick="addClientToActivity(${e.ClientNo}, ${ActivityNo})">${e.clientDetails()}</li>`;
+      }
+    })
+
+    let ul_added=getElementById("clients-added-group");
+    ul_added.innerHTML = '';
+    activities[ActivityNo].ClientsList.forEach((cl) =>{
+      ul_added.innerHTML += `<li class="clients-group-item" onclick="removeClientFromActivity(${cl.ClientNo}, ${ActivityNo})">${cl.clientDetails()}</li>`;
+    })
+  }
+
+  function addClientToActivity(ClientNo:number, ActivityNo:number){
+
+    let actv = activities[ActivityNo]
+    actv.SignedClients += 1;
+
+    activities.forEach(a => {
+      if (a.ActivityNo === ActivityNo) {
+        clients.forEach(c => {
+          if (c.ClientNo === ClientNo) {
+            a.ClientsList.push(c)
+          }
+        });
+      }
+    });
+
+    showAddClientToActivity(ActivityNo);
+  }
+
+  function removeClientFromActivity(ClientNo:number, ActivityNo:number){
+    let actv = activities[ActivityNo]
+    actv.SignedClients -= 1;
+
+    activities.forEach(a => {
+      if (a.ActivityNo === ActivityNo) {
+        clients.forEach(c => {
+          if (c.ClientNo === ClientNo) {
+            delete a.ClientsList[a.ClientsList.indexOf(c)];
+          }
+        });
+      }
+    })
+
+    showAddClientToActivity(ActivityNo);
+  }
+
+  function BackActivityList(){
+    let activity = new Activity();
+      getElementById('inputActivityName').value = activity.Name;
+      getElementById('inputMaxClients').value = "";
+      getElementById('activityDaySelect').value = 'Choose day...';
+      getElementById('activityHourSelect').value = '00:00';
+
+      getElementById("client_add_to_activity").style.display = 'none';
+      getElementById("activity_create_form").style.display = 'none';
+    getElementById("activities_list").style.display = 'block';
+
   }
   
   function getElementById(element: string): HTMLInputElement{
