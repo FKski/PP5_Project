@@ -87,6 +87,8 @@ function editClientFunc(ClientNo) {
             getElementById('InputNotes').value = loadedClient.Notes;
             getElementById('InputActive').checked = loadedClient.active;
             getElementById('InputName').setAttribute('readonly', 'true');
+            getElementById('InputName').setAttribute('class', 'form-control-plaintext text-white');
+            getElementById('InputLastName').setAttribute('class', 'form-control-plaintext text-white');
             getElementById('InputLastName').setAttribute('readonly', 'true');
             ModifyClientNo = loadedClient.ClientNo;
         }
