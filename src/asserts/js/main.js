@@ -9,6 +9,96 @@ let activityNoForInstructorChange = 0;
 let InstructorNo = 0;
 let instructors = [];
 let ModifyInstructorNo = 0;
+function generatePOC() {
+    let client1 = new Client();
+    client1.ClientNo = 0;
+    client1.name = 'Filip';
+    client1.surname = 'Kamiński';
+    client1.street = 'Krakowska';
+    client1.HouseNumber = '5';
+    client1.FlatNumber = '2';
+    client1.City = 'Kraków';
+    client1.ZIP = '33-33';
+    client1.Sex = 'Male';
+    client1.Notes = 'None';
+    client1.active = true;
+    let client2 = new Client();
+    client2.ClientNo = 1;
+    client2.name = 'Adam';
+    client2.surname = 'Skowron';
+    client2.street = 'Malarska';
+    client2.HouseNumber = '12';
+    client2.FlatNumber = '';
+    client2.City = 'Rabka Zdrój';
+    client2.ZIP = '21-732';
+    client2.Sex = 'Male';
+    client2.Notes = 'Had ankle injury';
+    client2.active = false;
+    let client3 = new Client();
+    client3.ClientNo = 2;
+    client3.name = 'Ewenlina';
+    client3.surname = 'Kałamarz';
+    client3.street = 'Bura';
+    client3.HouseNumber = '4';
+    client3.FlatNumber = '21';
+    client3.City = 'Gdańsk';
+    client3.ZIP = '12-093';
+    client3.Sex = 'Female';
+    client3.Notes = 'None';
+    client3.active = true;
+    let instructor1 = new Instructor();
+    instructor1.InstructorNo = 0;
+    instructor1.name = 'Kamil';
+    instructor1.surname = 'Stoch';
+    instructor1.street = 'Zakopiańska';
+    instructor1.HouseNumber = '22';
+    instructor1.FlatNumber = '';
+    instructor1.City = 'Leszno';
+    instructor1.ZIP = '93-212';
+    instructor1.Sex = 'Male';
+    instructor1.Notes = 'None';
+    instructor1.active = true;
+    let activity1 = new Activity();
+    activity1.ActivityNo = 0;
+    activity1.ActivityDay = "TU";
+    activity1.ActivityHour = "20:30";
+    activity1.Name = "Ćwiczenia skokowe";
+    activity1.MaxClients = 2;
+    activity1.SignedClients = 0;
+    activity1.InstructorNo = 0;
+    clients.push(client1);
+    clients.push(client2);
+    clients.push(client3);
+    activities.push(activity1);
+    instructors.push(instructor1);
+    client1.Activities.push(activity1);
+    client3.Activities.push(activity1);
+    instructor1.Activities.push(activity1);
+    activity1.ClientsList.push(client1);
+    activity1.ClientsList.push(client3);
+    activity1.SignedClients = 2;
+    let ul = getElementById("clients-group");
+    ul.innerHTML = '';
+    clients.forEach((e) => {
+        ul.innerHTML += `<li class="list-group-item" onclick="editClientFunc(${e.ClientNo})">${e.clientDetails()}</li>`;
+    });
+    let ul2 = getElementById("activites-group");
+    ul2.innerHTML = '';
+    activities.forEach((e) => {
+        ul2.innerHTML += `<li class="list-group-item" onclick="showAddClientToActivity(${e.ActivityNo})">${e.ActivityDetails()}  </li>`;
+        // <button onclick="showAddClientToActivity(${e.ActivityNo})">Add clients</button>
+    });
+    let ul_added = getElementById("clients-added-group");
+    ul_added.innerHTML = '';
+    activities[activity1.ActivityNo].ClientsList.forEach((cl) => {
+        ul_added.innerHTML += `<li class="list-group-item" onclick="removeClientFromActivity(${cl.ClientNo}, ${activity1.ActivityNo})">${cl.clientDetails()}</li>`;
+    });
+    let ul3 = getElementById("instructors-group");
+    ul3.innerHTML = '';
+    instructors.forEach((e) => {
+        ul3.innerHTML += `<li class="list-group-item" onclick="editInstructorFunc(${e.InstructorNo})">${e.instructorDetails()}</li>`;
+    });
+}
 function SaveClient() {
     console.log('Moved to client_list form');
     let newClient = new Client();
@@ -174,7 +264,7 @@ function InstructorBack() {
     getElementById('InstructorInputLastName').removeAttribute('readonly');
 }
 function Login() {
-    if (getElementById("unlockPasswd").value === "") {
+    if (getElementById("unlockPasswd").value === "passwd") {
         getElementById("menu").style.display = 'block';
         getElementById("login").style.display = 'none';
         getElementById("unlockPasswd").value = "";
