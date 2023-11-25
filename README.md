@@ -15,4 +15,6 @@ Project is created with:
 * NodeJS version: 20.10.0
 
 ## Setup
-If you want to unlock this app you will need a password. It's simple, just 'passwd'.
+If you want to see our project you have to download all files, than just open index.html file
+
+To unlock this app you will need a password. It's simple, just 'passwd'.
