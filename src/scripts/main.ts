@@ -205,7 +205,7 @@ function editClientFunc(ClientNo:number){
   }
 
   function Login(){
-    if (getElementById("unlockPasswd").value === "") {
+    if (getElementById("unlockPasswd").value === "passwd") {
       getElementById("menu").style.display = 'block';
       getElementById("login").style.display = 'none';
       getElementById("unlockPasswd").value = "";
