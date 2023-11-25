@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/src/SASS/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"> 
+    <link href="/src/SASS/style.css" rel="stylesheet">
     <script src="./asserts/js/main.js"></script>
     <script src="./asserts/js/customer.js"></script>
     <script src="./asserts/js/activity.js"></script>
@@ -16,95 +17,91 @@
   </head>
   <body >
 
-    <div id="login">
+    <div class="m-1" id="login">
       <form>
         <label for="unlockPasswd" class="form-label">Password</label>
         <input type="password" id="unlockPasswd" class="form-control" aria-describedby="passwordHelpBlock">
-        <div id="passwordHelpBlock">
+        <div class="m-1" id="passwordHelpBlock">
           Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
         </div>
         <button class="btn btn-primary" type="button" id="LoginButton" onclick="(Login())">Unlock</button>
       </form>      
     </div>
 
-    <div id="menu" style="display: none;">
+    <div class="m-1" id="menu" style="display: none;">
       <form>
         <button class="btn btn-primary" type="button" id="showClientsScreen" onclick="ShowClientsScreen()" class="text-center">Clients</button>
         <button class="btn btn-primary" type="button" id="showActivitiesScreen" onclick="ShowActivitiesScreen()" class="text-center">Activities</button>
         <button class="btn btn-primary" type="button" id="showInstrtuctorsScreen" onclick="ShowInstructorsScreen()" class="text-center">Instructors</button>
         <button class="btn btn-primary" type="button" id="LockButton" onclick="(LockPage())" class="text-center">Lock</button>
-        
       </form>
-
     </div>
 
-    <div id = "client_list" style="display: none;">
+    <div class="m-1" id = "client_list" style="display: none;">
         <form>
           <button class="btn btn-primary" type="button" onclick="(ShowMenu())">Menu</button>
-          <ul id="clients-group">
-        
-
+          <ul class="list-group" id="clients-group">
           </ul>
           <button class="btn btn-primary" type="button" id="newClient" onclick="CreateNewClient()">New client</button>
         </form>
     </div>
 
-    <div id = "activities_list" style="display: none;">
+    <div class="m-1" id = "activities_list" style="display: none;">
         <form>
           <button class="btn btn-primary" type="button" onclick="(ShowMenu())">Menu</button>
-          <ul id="activites-group">
-        
+          <ul class="list-group" id="activites-group">
           </ul>
           <button class="btn btn-primary" type="button" id="newActivity" onclick="CreateNewActivity()">New activity</button>
         </form>
     </div>
 
-    <div id="client_create_form" style="display: none;">
+    <div class="m-1" id="client_create_form" style="display: none;">
         <form>
-        <div class="form-group">
+          <button class="btn btn-primary" type="button" id="backButton" onclick="(Back())">Back</button>
+        <div class="m-1" class="form-group">
           <label for="InputName">Name:</label>
           <input type="text" class="form-control" id="InputName" placeholder="Name..." required>
         </div>
-        <div class="form-group">
+        <div class="m-1" class="form-group">
           <label for="InputLastName">Last name:</label>
           <input type="text" class="form-control" id="InputLastName" placeholder="Last name..." required>
         </div>
-        <div class="form-group">
+        <div class="m-1" class="form-group">
           <label for="InputStreet">Street:</label>
           <input type="text" class="form-control" id="InputStreet" placeholder="Street..." required>
         </div>
-        <div class="form-group">
+        <div class="m-1" class="form-group">
           <label for="InputHouseNumber">House number:</label>
           <input type="text" class="form-control" id="InputHouseNumber" placeholder="House number..." required>
         </div>
-        <div class="form-group">
+        <div class="m-1" class="form-group">
           <label for="InputFlatNumber">Flat number:</label>
           <input type="text" class="form-control" id="InputFlatNumber" placeholder="Flat number..." >
         </div>
-        <div class="form-group">
+        <div class="m-1" class="form-group">
           <label for="InputCity">City:</label>
           <input type="text" class = "form-control" id="InputCity" placeholder="City..." required>
         </div>
-        <div class="form-group">
+        <div class="m-1" class="form-group">
           <label for="InputZIP">Zip code:</label>
           <input type="text" class="form-control" id="InputZIP" placeholder="Zip code..." required>
         </div>
-        <div class="form-group">
+        <div class="m-1" class="form-group">
             <label for="InputSex">Sex:</label>
-        <div id="SexCheck">
-            <div class="form-check">
+        <div class="m-1" id="SexCheck">
+            <div class="m-1" class="form-check">
                 <input class="form-check-input" type="radio" name="SEX" id="InputSexF" value="Female" checked>
                 <label class="form-check-label" for="InputSexFemale">
                   Female
                 </label>
               </div>
-            <div class="form-check">
+            <div class="m-1" class="form-check">
                 <input class="form-check-input" type="radio" name="SEX" id="InputSexM" value="Male">
                 <label class="form-check-label" for="InputSexMale">
                   Male
                 </label>
               </div>
-            <div class="form-check">
+            <div class="m-1" class="form-check">
                 <input class="form-check-input" type="radio" name="SEX" id="InputSexO" value="Other">
                 <label class="form-check-label" for="InputSexOther">
                   Other
@@ -112,43 +109,44 @@
               </div>
           </div>
         </div>
-        <div class="form-group">
+        <div class="m-1" class="form-group">
             <label for="InputNotes" >Notes:</label>
             <textarea class="form-control" id="InputNotes" rows="3"></textarea>
           </div>
-        <div class="form-check">
+        <div class="m-1" class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="InputActive">
             <label class="form-check-label" for="InputActive">
               Active ?
             </label>
           </div>
-        <br>
+        
         <label id="client-activities-group-label" style="display: none;">Activities:</label>
-        <ul id="client-activities-group" style="display: none;">
+        <ul class="list-group" id="client-activities-group" style="display: none;">
         
 
         </ul>
 
-
-          <button class="btn btn-primary" type="button" id="backButton" onclick="(Back())">Back</button>
-          <button class="btn btn-primary" type="button" id="saveButton" onclick="(SaveClient())">Save client</button>
-          <button class="btn btn-primary" type="button" id="modifyButton" style="display: none;" onclick="(SaveModified(ModifyClientNo))">Modify client</button>
+        
+        <button class="btn btn-primary" type="button" id="saveButton" onclick="(SaveClient())">Save client</button>
+        <button class="btn btn-primary" type="button" id="modifyButton" style="display: none;" onclick="(SaveModified(ModifyClientNo))">Modify client</button>
+          
+          
           <!-- <button class="btn btn-primary" type="button" id="loadButton">Wczytaj z konsoli</button> -->
         </form>
     </div>
 
-    <div id="activity_create_form" style="display: none;">
+    <div class="m-1" id="activity_create_form" style="display: none;">
       
         <button class="btn btn-primary" onclick="BackActivityList()">Back</button>
-        <div class="form-group">
+        <div class="m-1" class="form-group">
           <label for="inputActivityName">Name:</label>
           <input type="text" class="form-control" id="inputActivityName" placeholder="Activity name..." required>
         </div>
-        <div class="form-group">
+        <div class="m-1" class="form-group">
           <label for="inputMaxClients">Max clients:</label>
           <input type="text" class="form-control" id="inputMaxClients" placeholder="Max clients..." required>
         </div>
-        <div>
+        <div class="m-1">
           <label for="activityDaySelect">Day:</label>
         <select id="activityDaySelect" class="form-select"  required>
           <option selected>Choose day...</option>
@@ -161,11 +159,11 @@
           <option value="SU">Sunday</option>
         </select>
         </div>
-        <div class="cs-form">
+        <div class="m-1" class="cs-form">
           <label for="activityHourSelect">Hour:</label>
           <input id="activityHourSelect" type="time" class="form-control" required/>
         </div>
-        <div>
+        <div class="m-1">
         <label >Instructor:</label>
         <select id="activityInstructorSelect" class="form-select"  required>
           
@@ -176,55 +174,28 @@
     </div>
     
 
-    <div id="client_add_to_activity" style="display: none;">
-      <div><button class="btn btn-primary" onclick="BackActivityList()">Back</button></div>
-      <div><label id="client-add-to-activity-instructor">Instructor: </label></div>
+    <div class="m-1" id="client_add_to_activity" style="display: none;">
+      <div class="m-1"><button class="btn btn-primary" onclick="BackActivityList()">Back</button></div>
+      <div class="m-1"><label id="client-add-to-activity-instructor">Instructor: </label></div>
 
-      <button class="btn btn-primary" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Choose instructor
-      </button>
+      
 
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Choose instructor</h5>
-              <button class="btn btn-primary" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <form>
-                <div class="mb-3">
-                  <label for="SelectInstructorPopup" class="form-label">Choose option:</label>
-                  <select class="form-select" id="SelectInstructorPopup">
-                    
-                  </select>
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-primary" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button class="btn btn-primary" type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="SaveChangesInstructorPopup()">Save changes</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <label for="clients-add-group">All clients:</label>
-      <ul id="clients-add-group">
+      <label class="m-1" for="clients-add-group">All clients:</label>
+      <ul class="list-group" id="clients-add-group">
         
       </ul>
       <hr>
-      <label for="clients-added-group" id="SignedClients">Signed clients:</label>
-      <ul id="clients-added-group">
+      <label class="m-1" for="clients-added-group" id="SignedClients">Signed clients:</label>
+      <ul class="list-group" id="clients-added-group">
         
       </ul>
 
     </div>
 
-    <div id="instructor_list" style="display: none;">
+    <div class="m-1" id="instructor_list" style="display: none;">
       <form>
         <button class="btn btn-primary" type="button" onclick="(ShowMenu())">Menu</button>
-        <ul id="instructors-group">
+        <ul class="list-group" id="instructors-group">
       
 
         </ul>
@@ -232,52 +203,54 @@
       </form>
     </div>
 
-    <div id="instructor_create_form" style="display: none;">
+    <div class="m-1" id="instructor_create_form" style="display: none;">
+      
       <form>
-      <div class="form-group">
+      <button class="btn btn-primary" type="button" id="InstructorBackButton" onclick="(InstructorBack())">Back</button>
+      <div class="m-1" class="form-group">
         <label for="InstructorInputName">Name:</label>
         <input type="text" class="form-control" id="InstructorInputName" placeholder="Name..." required>
       </div>
-      <div class="form-group">
+      <div class="m-1" class="form-group">
         <label for="InstructorInputLastName">Last name:</label>
         <input type="text" class="form-control" id="InstructorInputLastName" placeholder="Last name..." required>
       </div>
-      <div class="form-group">
+      <div class="m-1" class="form-group">
         <label for="InstructorInputStreet">Street:</label>
         <input type="text" class="form-control" id="InstructorInputStreet" placeholder="Street..." required>
       </div>
-      <div class="form-group">
+      <div class="m-1" class="form-group">
         <label for="InstructorInputHouseNumber">House number:</label>
         <input type="text" class="form-control" id="InstructorInputHouseNumber" placeholder="House number..." required>
       </div>
-      <div class="form-group">
+      <div class="m-1" class="form-group">
         <label for="InstructorInputFlatNumber">Flat number:</label>
         <input type="text" class="form-control" id="InstructorInputFlatNumber" placeholder="Flat number..." >
       </div>
-      <div class="form-group">
+      <div class="m-1" class="form-group">
         <label for="InstructorInputCity">City:</label>
         <input type="text" class = "form-control" id="InstructorInputCity" placeholder="City..." required>
       </div>
-      <div class="form-group">
+      <div class="m-1" class="form-group">
         <label for="InstructorInputZIP">Zip code:</label>
         <input type="text" class="form-control" id="InstructorInputZIP" placeholder="Zip code..." required>
       </div>
-      <div class="form-group">
+      <div class="m-1" class="form-group">
           <label for="InstructorInputSex">Sex:</label>
-      <div id="SexCheck">
-          <div class="form-check">
+      <div class="m-1" id="SexCheck">
+          <div class="m-1" class="form-check">
               <input class="form-check-input" type="radio" name="InstructorSEX" id="InstructorInputSexF" value="Female" checked>
               <label class="form-check-label" for="InstructorInputSexFemale">
                 Female
               </label>
             </div>
-          <div class="form-check">
+          <div class="m-1" class="form-check">
               <input class="form-check-input" type="radio" name="InstructorSEX" id="InstructorInputSexM" value="Male">
               <label class="form-check-label" for="InstructorInputSexMale">
                 Male
               </label>
             </div>
-          <div class="form-check">
+          <div class="m-1" class="form-check">
               <input class="form-check-input" type="radio" name="InstructorSEX" id="InstructorInputSexO" value="Other">
               <label class="form-check-label" for="InstructorInputSexOther">
                 Other
@@ -285,23 +258,23 @@
             </div>
         </div>
       </div>
-      <div class="form-group">
+      <div class="m-1" class="form-group">
           <label for="InstructorInputNotes" >Notes:</label>
           <textarea class="form-control" id="InstructorInputNotes" rows="3"></textarea>
         </div>
-      <div class="form-check">
+      <div class="m-1" class="form-check">
           <input class="form-check-input" type="checkbox" value="" id="InstructorInputActive">
           <label class="form-check-label" for="InstructorInputActive">
             Active ?
           </label>
         </div>
-      <br>
+      
       <label id="instructor-activities-group-label" style="display: none;">Activities:</label>
-      <ul id="instructor-activities-group" style="display: none;">
+      <ul class="list-group" id="instructor-activities-group" style="display: none;">
       
 
       </ul>
-        <button class="btn btn-primary" type="button" id="InstructorBackButton" onclick="(InstructorBack())">Back</button>
+        
         <button class="btn btn-primary" type="button" id="InstructorSaveButton" onclick="(SaveInstructor())">Save instructor</button>
         <button class="btn btn-primary" type="button" id="InstructorModifyButton" style="display: none;" onclick="(SaveModifiedInstructor(ModifyInstructorNo))">Modify instructor</button>
         <!-- <button class="btn btn-primary" type="button" id="loadButton">Wczytaj z konsoli</button> -->

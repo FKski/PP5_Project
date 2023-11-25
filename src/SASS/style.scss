@@ -1,11 +1,27 @@
-
 $body-bg: rgb(58, 58, 58);
 $body-color: rgb(241, 241, 241);
 
 $primary: #b3f00d;
 $danger: orange;
-$btn-primary-bg: rgb(167, 166, 166);
-$btn-primary-color: rgb(0, 0, 0);
+
+$btn-border-width: 2px;
+$btn-font-weight: 600;
+
+
+$list-group-color:black; 
+$list-group-bg:rgb(204, 204, 204); 
+$list-group-border-color:black; 
+$list-group-border-width:2px; 
+$list-group-border-radius:10px; 
+$list-group-item-padding-y:2px;  
+
+
+.btn {
+    margin: 10px; // Dostosuj wartość marginesu według potrzeb
+  }
+.list-group-item {
+    margin: 3px; // Dostosuj wartość marginesu według potrzeb
+  }
 
 
 @import "../../node_modules/bootstrap/scss/bootstrap";

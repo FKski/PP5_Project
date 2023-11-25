@@ -39,7 +39,7 @@ function SaveClient() {
     let ul=getElementById("clients-group");
     ul.innerHTML = ''
     clients.forEach((e)=>{
-        ul.innerHTML += `<li class="clients-group-item" onclick="editClientFunc(${e.ClientNo })">${e.clientDetails()}</li>`;
+        ul.innerHTML += `<li class="list-group-item" onclick="editClientFunc(${e.ClientNo })">${e.clientDetails()}</li>`;
     })
     ClientNo += 1;
     Back();
@@ -82,7 +82,7 @@ function SaveModified(ModifyClientNo:number){
   let ul=getElementById("clients-group");
     ul.innerHTML = ''
     clients.forEach((e)=>{
-        ul.innerHTML += `<li class="clients-group-item" onclick="editClientFunc(${e.ClientNo })">${e.clientDetails()}</li>`;
+        ul.innerHTML += `<li class="list-group-item" onclick="editClientFunc(${e.ClientNo })">${e.clientDetails()}</li>`;
     })
   clients.forEach(e=>{console.log(e)})
 
@@ -136,7 +136,7 @@ function editClientFunc(ClientNo:number){
       let ul=getElementById("client-activities-group");
       ul.innerHTML = ''
       loadedClient.Activities.forEach((e)=>{
-        ul.innerHTML += `<li class="client-activities-group-item">${e.ActivityDetails()}</li>`;
+        ul.innerHTML += `<li class="list-group-item">${e.ActivityDetails()}</li>`;
       })
       
       ModifyClientNo = loadedClient.ClientNo;
@@ -269,7 +269,7 @@ function editClientFunc(ClientNo:number){
     let ul=getElementById("activites-group");
     ul.innerHTML = ''
     activities.forEach((e)=>{
-        ul.innerHTML += `<li class="activities-group-item" onclick="showAddClientToActivity(${e.ActivityNo})">${e.ActivityDetails()}  </li>`;
+        ul.innerHTML += `<li class="list-group-item" onclick="showAddClientToActivity(${e.ActivityNo})">${e.ActivityDetails()}  </li>`;
         // <button onclick="showAddClientToActivity(${e.ActivityNo})">Add clients</button>
     })
     activityNo += 1;
@@ -288,26 +288,24 @@ function editClientFunc(ClientNo:number){
     ul.innerHTML = ''
     clients.forEach((e)=>{      
       if (e.active==true && activities[ActivityNo].ClientsList.indexOf(e)==-1) {
-        ul.innerHTML += `<li class="clients-group-item" onclick="addClientToActivity(${e.ClientNo}, ${ActivityNo})">${e.clientDetails()}</li>`;
+        ul.innerHTML += `<li class="list-group-item" onclick="addClientToActivity(${e.ClientNo}, ${ActivityNo})">${e.clientDetails()}</li>`;
       }
     })
 
     let ul_added=getElementById("clients-added-group");
     ul_added.innerHTML = '';
     activities[ActivityNo].ClientsList.forEach((cl) =>{
-      ul_added.innerHTML += `<li class="clients-group-item" onclick="removeClientFromActivity(${cl.ClientNo}, ${ActivityNo})">${cl.clientDetails()}</li>`;
+      ul_added.innerHTML += `<li class="list-group-item" onclick="removeClientFromActivity(${cl.ClientNo}, ${ActivityNo})">${cl.clientDetails()}</li>`;
     })
 
-    let selectInst=getElementById("SelectInstructorPopup");
-    selectInst.innerHTML = '';
-    selectInst.innerHTML += '<option selected>Choose instructor...</option>';
-      instructors.forEach((instructor)=>{
-        if (instructor.active==true) {
-          selectInst.innerHTML += `<option value='${instructor.InstructorNo}'}'> ${instructor.name + ' ' + instructor.surname}</option>`;
-        }
-      })
-
     getElementById('client-add-to-activity-instructor').innerHTML = `Instructor: ${instructors[activities[ActivityNo].InstructorNo].name + ' ' + instructors[activities[ActivityNo].InstructorNo].surname}`
+
+    if (actv.SignedClients >= actv.MaxClients) {
+      getElementById('SignedClients').style.color = 'red';
+    }
+    else{
+      getElementById('SignedClients').style.color = 'rgb(241, 241, 241)';
+    }
   }
 
   function addClientToActivity(ClientNo:number, ActivityNo:number){
@@ -398,7 +396,7 @@ function editClientFunc(ClientNo:number){
     let ul=getElementById("instructors-group");
     ul.innerHTML = ''
     instructors.forEach((e)=>{
-        ul.innerHTML += `<li class="instructors-group-item" onclick="editInstructorFunc(${e.InstructorNo })">${e.instructorDetails()}</li>`;
+        ul.innerHTML += `<li class="list-group-item" onclick="editInstructorFunc(${e.InstructorNo })">${e.instructorDetails()}</li>`;
     })
     InstructorNo += 1;
     InstructorBack();
@@ -441,7 +439,7 @@ function editClientFunc(ClientNo:number){
         let ul=getElementById("instructor-activities-group");
         ul.innerHTML = ''
         loadedInstructor.Activities.forEach((e)=>{
-          ul.innerHTML += `<li class="instructor-activities-group-item">${e.ActivityDetailsForInstructor()}</li>`;
+          ul.innerHTML += `<li class="list-group-item">${e.ActivityDetailsForInstructor()}</li>`;
         })
         ModifyInstructorNo = loadedInstructor.InstructorNo;
         }
@@ -484,7 +482,7 @@ function editClientFunc(ClientNo:number){
     let ul=getElementById("instructors-group");
       ul.innerHTML = ''
       instructors.forEach((e)=>{
-          ul.innerHTML += `<li class="instructors-group-item" onclick="editInstructorFunc(${e.InstructorNo })">${e.instructorDetails()}</li>`;
+          ul.innerHTML += `<li class="list-group-item" onclick="editInstructorFunc(${e.InstructorNo })">${e.instructorDetails()}</li>`;
       })
     instructors.forEach(e=>{console.log(e)})
   
@@ -501,10 +499,7 @@ function editClientFunc(ClientNo:number){
     getElementById('InstructorInputLastName').removeAttribute('readonly');
   }
 
-  function SaveChangesInstructorPopup(){
-    activities[activityNoForInstructorChange].InstructorNo= +getElementById('SelectInstructorPopup').value;
-    showAddClientToActivity(activityNoForInstructorChange);
-  }
+  
 
   function getElementById(element: string): HTMLInputElement{
     return document.getElementById(element) as HTMLInputElement;

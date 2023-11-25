@@ -8,4 +8,5 @@
 2.4 Show instructor's activities \/
 2.5 If instructor's status changes to unactive disconnect it from all activitiess \/
 
-3. Add a possibility to change instrcutor in activity\/
+3. Add a possibility to change instrcutor in activity
+4. Check if counting added client works
