@@ -12,6 +12,7 @@ class Client{
     Sex="Female";
     Notes="";
     active=false;
+    Activities:Array<Activity>= [];
 
     actionAddr = () =>{
         if (this.FlatNumber == ""){

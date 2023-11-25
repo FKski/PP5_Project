@@ -8,6 +8,7 @@ class Activity {
         this.Name = "";
         this.MaxClients = 0;
         this.SignedClients = 0;
+        this.InstructorNo = 0;
         this.GetFullDay = () => {
             switch (this.ActivityDay) {
                 case 'M':
@@ -27,6 +28,9 @@ class Activity {
             }
         };
         this.ActivityDetails = () => {
+            return this.Name + " | Day: " + this.GetFullDay() + " | Hour: " + this.ActivityHour;
+        };
+        this.ActivityDetailsForInstructor = () => {
             return this.Name + " | Day: " + this.GetFullDay() + " | Hour: " + this.ActivityHour;
         };
     }

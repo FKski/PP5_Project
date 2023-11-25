@@ -1,0 +1,11 @@
+1.1 Add activities list to client \/
+1.2 When making client unactive, remove it from activities\/
+1.3 Add activites list in client modify screen \/
+
+2. Add Instructor \/
+2.1 Add possibility to choose from active instructors and add it to the activity \/
+2.3 Show instrcutor next to the activity hour \/
+2.4 Show instructor's activities \/
+2.5 If instructor's status changes to unactive disconnect it from all activitiess \/
+
+3. Add a possibility to change instrcutor in activity\/

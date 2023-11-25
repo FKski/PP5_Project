@@ -5,7 +5,11 @@ let ModifyClientObj:number = 0;
 
 let activities:Array<Activity> = [];
 let activityNo:number = 0;
+let activityNoForInstructorChange :number = 0;
 
+let InstructorNo:number = 0;
+let instructors:Array<Instructor> = [];
+let ModifyInstructorNo:number = 0;
 
 
 
@@ -46,7 +50,10 @@ function SaveClient() {
 
 function SaveModified(ModifyClientNo:number){
   
-  let modifiedClient = clients[ModifyClientNo]
+  let modifiedClient = clients[ModifyClientNo];
+  let ClientActiveCheck = clients[ModifyClientNo].active;
+  let ClientActivities = clients[ModifyClientNo].Activities;
+  let Client = clients[ModifyClientNo];
   modifiedClient.ClientNo = ModifyClientNo;
   modifiedClient.name = getElementById('InputName').value;
   modifiedClient.surname = getElementById('InputLastName').value;
@@ -59,6 +66,18 @@ function SaveModified(ModifyClientNo:number){
   modifiedClient.Notes = getElementById('InputNotes').value;
   modifiedClient.active = getElementById('InputActive').checked;
 
+       if(ClientActiveCheck != getElementById('InputActive').checked && getElementById('InputActive').checked == false){
+        ClientActivities.forEach(ClientActivity => {
+          activities.forEach(activity => {
+            if (activity == ClientActivity) {
+              delete activity.ClientsList[activity.ClientsList.indexOf(Client)];
+              activity.SignedClients -= 1;
+            }
+          });
+        });
+        modifiedClient.Activities = [];
+      }
+
   clients[ModifyClientNo] = modifiedClient;
   let ul=getElementById("clients-group");
     ul.innerHTML = ''
@@ -67,12 +86,16 @@ function SaveModified(ModifyClientNo:number){
     })
   clients.forEach(e=>{console.log(e)})
 
+
+
   Back()
 
   getElementById("client_create_form").style.display = "none";
   getElementById("client_list").style.display = "block";
   getElementById("modifyButton").style.display = "none";
   getElementById("saveButton").style.display = "block";
+  getElementById("client-activities-group-label").style.display = "none";
+  getElementById("client-activities-group").style.display = "none";
 
   getElementById('InputName').removeAttribute('readonly');
   getElementById('InputLastName').removeAttribute('readonly');
@@ -82,6 +105,8 @@ function editClientFunc(ClientNo:number){
   getElementById("client_create_form").style.display = "block";
   getElementById("client_list").style.display = "none";
   getElementById("modifyButton").style.display = "block";
+  getElementById("client-activities-group-label").style.display = "block";
+  getElementById("client-activities-group").style.display = "block";
   getElementById("saveButton").style.display = "none";
   console.log(`loaded ${ClientNo}`)
 
@@ -106,12 +131,16 @@ function editClientFunc(ClientNo:number){
       getElementById('InputNotes').value = loadedClient.Notes;
       getElementById('InputActive').checked = loadedClient.active;
       getElementById('InputName').setAttribute('readonly', 'true');
-      getElementById('InputName').setAttribute('class', 'form-control-plaintext text-white');
-      getElementById('InputLastName').setAttribute('class', 'form-control-plaintext text-white');
       getElementById('InputLastName').setAttribute('readonly', 'true');
 
-        
+      let ul=getElementById("client-activities-group");
+      ul.innerHTML = ''
+      loadedClient.Activities.forEach((e)=>{
+        ul.innerHTML += `<li class="client-activities-group-item">${e.ActivityDetails()}</li>`;
+      })
+      
       ModifyClientNo = loadedClient.ClientNo;
+
       }
 
   });
@@ -127,7 +156,7 @@ function editClientFunc(ClientNo:number){
 
   function Back(){
     let client = new Client();
-   getElementById('InputName').value = client.name;
+    getElementById('InputName').value = client.name;
     getElementById('InputLastName').value = client.surname;
     getElementById('InputStreet').value = client.street;
     getElementById('InputHouseNumber').value = client.HouseNumber;
@@ -139,19 +168,40 @@ function editClientFunc(ClientNo:number){
       if (element instanceof HTMLInputElement && element.type === "radio" && element.value === "Female") {
           element.checked;
       }
-      
-
-  });
+    });
     getElementById('InputNotes').value = client.Notes;
     getElementById('InputActive').checked = client.active;
-   getElementById("client_create_form").style.display = "none";
-   getElementById("client_list").style.display = "block";
-   getElementById("modifyButton").style.display = "none";
- getElementById("saveButton").style.display = "none";
- getElementById('InputName').removeAttribute('readonly');
- getElementById('InputLastName').removeAttribute('readonly');
- 
+    getElementById("client_create_form").style.display = "none";
+    getElementById("client_list").style.display = "block";
+    getElementById("modifyButton").style.display = "none";
+    getElementById("saveButton").style.display = "none";
+    getElementById('InputName').removeAttribute('readonly');
+    getElementById('InputLastName').removeAttribute('readonly');
+  }
 
+  function InstructorBack(){
+    let instructor = new Instructor();
+    getElementById('InstructorInputName').value = instructor.name;
+    getElementById('InstructorInputLastName').value = instructor.surname;
+    getElementById('InstructorInputStreet').value = instructor.street;
+    getElementById('InstructorInputHouseNumber').value = instructor.HouseNumber;
+    getElementById('InstructorInputFlatNumber').value = instructor.FlatNumber;
+    getElementById('InstructorInputCity').value = instructor.City;
+    getElementById('InstructorInputZIP').value = instructor.ZIP;
+    getElementsByName("InstructorSEX").forEach((element: HTMLElement) => {
+      // Sprawdź, czy element jest inputem typu radio
+      if (element instanceof HTMLInputElement && element.type === "radio" && element.value === "Female") {
+          element.checked;
+      }
+    });
+    getElementById('InstructorInputNotes').value = instructor.Notes;
+    getElementById('InstructorInputActive').checked = instructor.active;
+    getElementById("instructor_create_form").style.display = "none";
+    getElementById("instructor_list").style.display = "block";
+    getElementById("modifyButton").style.display = "none";
+    getElementById("saveButton").style.display = "none";
+    getElementById('InstructorInputName').removeAttribute('readonly');
+    getElementById('InstructorInputLastName').removeAttribute('readonly');
   }
 
   function Login(){
@@ -172,6 +222,7 @@ function editClientFunc(ClientNo:number){
     getElementById("menu").style.display = 'none';
     getElementById("client_list").style.display = 'block';
   }
+
   function ShowActivitiesScreen(){
     getElementById("menu").style.display = 'none';
     getElementById("activities_list").style.display = 'block';
@@ -181,27 +232,40 @@ function editClientFunc(ClientNo:number){
     getElementById("menu").style.display = 'block';
     getElementById("client_list").style.display = 'none';
     getElementById("activities_list").style.display = 'none';
+    getElementById("instructor_list").style.display = 'none';
   }
 
   function CreateNewActivity(){
     getElementById("activity_create_form").style.display = 'block';
     getElementById("activities_list").style.display = 'none';
 
+    let selectInst=getElementById("activityInstructorSelect");
+    selectInst.innerHTML = '';
+    selectInst.innerHTML += '<option selected>Choose instructor...</option>';
+      instructors.forEach((instructor)=>{
+        if (instructor.active==true) {
+          selectInst.innerHTML += `<option value='${instructor.InstructorNo}'}'> ${instructor.name + ' ' + instructor.surname}</option>`;
+        }
+      })
+
     console.log("Create actv")
   }
 
-  function saveActivity(){
+  function saveToActivities(){
     let newActivity =  new Activity();
     newActivity.ActivityNo = activityNo;
     newActivity.Name = getElementById('inputActivityName').value;
     newActivity.ActivityDay = getElementById('activityDaySelect').value;
     newActivity.ActivityHour = getElementById('activityHourSelect').value;
     newActivity.MaxClients = +getElementById('inputMaxClients').value;
+    newActivity.InstructorNo = +getElementById('activityInstructorSelect').value;
 
     console.log(newActivity);
     activities.push(newActivity);
+    instructors[newActivity.InstructorNo].Activities.push(newActivity);
     getElementById("activity_create_form").style.display = 'none';
     getElementById("activities_list").style.display = 'block';
+
     let ul=getElementById("activites-group");
     ul.innerHTML = ''
     activities.forEach((e)=>{
@@ -212,6 +276,8 @@ function editClientFunc(ClientNo:number){
     }
   
   function showAddClientToActivity(ActivityNo :number){
+
+    activityNoForInstructorChange = ActivityNo;
     getElementById("activities_list").style.display = 'none';
     getElementById("client_add_to_activity").style.display = 'block';
 
@@ -231,6 +297,17 @@ function editClientFunc(ClientNo:number){
     activities[ActivityNo].ClientsList.forEach((cl) =>{
       ul_added.innerHTML += `<li class="clients-group-item" onclick="removeClientFromActivity(${cl.ClientNo}, ${ActivityNo})">${cl.clientDetails()}</li>`;
     })
+
+    let selectInst=getElementById("SelectInstructorPopup");
+    selectInst.innerHTML = '';
+    selectInst.innerHTML += '<option selected>Choose instructor...</option>';
+      instructors.forEach((instructor)=>{
+        if (instructor.active==true) {
+          selectInst.innerHTML += `<option value='${instructor.InstructorNo}'}'> ${instructor.name + ' ' + instructor.surname}</option>`;
+        }
+      })
+
+    getElementById('client-add-to-activity-instructor').innerHTML = `Instructor: ${instructors[activities[ActivityNo].InstructorNo].name + ' ' + instructors[activities[ActivityNo].InstructorNo].surname}`
   }
 
   function addClientToActivity(ClientNo:number, ActivityNo:number){
@@ -242,7 +319,8 @@ function editClientFunc(ClientNo:number){
       if (a.ActivityNo === ActivityNo) {
         clients.forEach(c => {
           if (c.ClientNo === ClientNo) {
-            a.ClientsList.push(c)
+            a.ClientsList.push(c);
+            c.Activities.push(a);
           }
         });
       }
@@ -260,6 +338,7 @@ function editClientFunc(ClientNo:number){
         clients.forEach(c => {
           if (c.ClientNo === ClientNo) {
             delete a.ClientsList[a.ClientsList.indexOf(c)];
+            delete c.Activities[c.Activities.indexOf(a)];
           }
         });
       }
@@ -280,7 +359,153 @@ function editClientFunc(ClientNo:number){
     getElementById("activities_list").style.display = 'block';
 
   }
+
+  function ShowInstructorsScreen(){
+    getElementById("menu").style.display = 'none';
+    getElementById("instructor_list").style.display = 'block';
+  }
+
+  function CreateNewInstructor() {
+    getElementById("instructor_create_form").style.display = 'block';
+    getElementById("instructor_list").style.display = 'none';
+    getElementById("saveButton").style.display = 'block';
+    console.log('Moved to instructor_create_form form')
+   }
+
+   function SaveInstructor() {
+    
+    console.log('Moved to instructor_list form')
   
+    let newInstructor = new Instructor();
+    newInstructor.InstructorNo = InstructorNo;
+    newInstructor.name = getElementById('InstructorInputName').value;
+    newInstructor.surname = getElementById('InstructorInputLastName').value;
+    newInstructor.street = getElementById('InstructorInputStreet').value;
+    newInstructor.HouseNumber = getElementById('InstructorInputHouseNumber').value;
+    newInstructor.FlatNumber = getElementById('InstructorInputFlatNumber').value;
+    newInstructor.City = getElementById('InstructorInputCity').value;
+    newInstructor.ZIP = getElementById('InstructorInputZIP').value;
+    newInstructor.Sex = querySelectorAll('input[name="InstructorSEX"]:checked').value;
+    newInstructor.Notes = getElementById('InstructorInputNotes').value;
+    newInstructor.active = getElementById('InstructorInputActive').checked;
+
+
+    // Zapisz dane do konsoli
+    console.log('Client:', newInstructor);
+    instructors.push(newInstructor)
+    getElementById("instructor_create_form").style.display = 'none';
+    getElementById("instructor_list").style.display = 'block';;
+    let ul=getElementById("instructors-group");
+    ul.innerHTML = ''
+    instructors.forEach((e)=>{
+        ul.innerHTML += `<li class="instructors-group-item" onclick="editInstructorFunc(${e.InstructorNo })">${e.instructorDetails()}</li>`;
+    })
+    InstructorNo += 1;
+    InstructorBack();
+
+      
+  }
+
+  function editInstructorFunc(InstructorNo:number){
+    getElementById("instructor_create_form").style.display = "block";
+    getElementById("instructor_list").style.display = "none";
+    getElementById("InstructorModifyButton").style.display = "block";
+    getElementById("InstructorSaveButton").style.display = "none";
+    getElementById("instructor-activities-group-label").style.display = "block";
+    getElementById("instructor-activities-group").style.display = "block";
+    console.log(`loaded ${InstructorNo}`)
+  
+    instructors.forEach(e => {
+      if (e.InstructorNo == InstructorNo) {
+        let loadedInstructor = instructors[InstructorNo]
+  
+        // Wypełnij pola formularza danymi z konsoli
+        getElementById('InstructorInputName').value = loadedInstructor.name;
+        getElementById('InstructorInputLastName').value = loadedInstructor.surname;
+        getElementById('InstructorInputStreet').value = loadedInstructor.street;
+        getElementById('InstructorInputHouseNumber').value = loadedInstructor.HouseNumber;
+        getElementById('InstructorInputFlatNumber').value = loadedInstructor.FlatNumber;
+        getElementById('InstructorInputCity').value = loadedInstructor.City;
+        getElementById('InstructorInputZIP').value = loadedInstructor.ZIP;
+        getElementsByName("InstructorSEX").forEach((element: HTMLElement) => {
+          // Sprawdź, czy element jest inputem typu radio
+          if (element instanceof HTMLInputElement && element.type === "radio" && element.value === loadedInstructor.Sex) {
+              element.checked;
+          }
+      });
+        getElementById('InstructorInputNotes').value = loadedInstructor.Notes;
+        getElementById('InstructorInputActive').checked = loadedInstructor.active;
+        getElementById('InstructorInputName').setAttribute('readonly', 'true');
+        getElementById('InstructorInputLastName').setAttribute('readonly', 'true');
+  
+        let ul=getElementById("instructor-activities-group");
+        ul.innerHTML = ''
+        loadedInstructor.Activities.forEach((e)=>{
+          ul.innerHTML += `<li class="instructor-activities-group-item">${e.ActivityDetailsForInstructor()}</li>`;
+        })
+        ModifyInstructorNo = loadedInstructor.InstructorNo;
+        }
+  
+    });
+    
+  }
+  
+  function SaveModifiedInstructor(ModifyInstructorNo:number){
+  
+    let modifiedInstructor = instructors[ModifyInstructorNo]
+    let InstructorActiveCheck = instructors[ModifyInstructorNo].active;
+    let InstructorActivities = instructors[ModifyInstructorNo].Activities;
+    let Instructor = instructors[ModifyInstructorNo];
+    modifiedInstructor.InstructorNo = ModifyInstructorNo;
+    modifiedInstructor.name = getElementById('InstructorInputName').value;
+    modifiedInstructor.surname = getElementById('InstructorInputLastName').value;
+    modifiedInstructor.street = getElementById('InstructorInputStreet').value;
+    modifiedInstructor.HouseNumber = getElementById('InstructorInputHouseNumber').value;
+    modifiedInstructor.FlatNumber = getElementById('InstructorInputFlatNumber').value;
+    modifiedInstructor.City = getElementById('InstructorInputCity').value;
+    modifiedInstructor.ZIP = getElementById('InstructorInputZIP').value;
+    modifiedInstructor.Sex = querySelectorAll('input[name="SEX"]:checked').value;
+    modifiedInstructor.Notes = getElementById('InstructorInputNotes').value;
+    modifiedInstructor.active = getElementById('InstructorInputActive').checked;
+
+    if(InstructorActiveCheck != getElementById('InstructorInputActive').checked && getElementById('InstructorInputActive').checked == false){
+      InstructorActivities.forEach(InstructorActivity => {
+        activities.forEach(activity => {
+          if (activity == InstructorActivity) {
+            activity.InstructorNo = 1;
+          }
+        });
+      });
+      modifiedInstructor.Activities = [];
+    }
+
+  
+    instructors[ModifyInstructorNo] = modifiedInstructor;
+    let ul=getElementById("instructors-group");
+      ul.innerHTML = ''
+      instructors.forEach((e)=>{
+          ul.innerHTML += `<li class="instructors-group-item" onclick="editInstructorFunc(${e.InstructorNo })">${e.instructorDetails()}</li>`;
+      })
+    instructors.forEach(e=>{console.log(e)})
+  
+    InstructorBack()
+  
+    getElementById("instructor_create_form").style.display = "none";
+    getElementById("instructor_list").style.display = "block";
+    getElementById("modifyButton").style.display = "none";
+    getElementById("saveButton").style.display = "block";
+    getElementById("instructor-activities-group-label").style.display = "none";
+    getElementById("instructor-activities-group").style.display = "none";
+  
+    getElementById('InstructorInputName').removeAttribute('readonly');
+    getElementById('InstructorInputLastName').removeAttribute('readonly');
+  }
+
+  function SaveChangesInstructorPopup(){
+    activities[activityNoForInstructorChange].InstructorNo= +getElementById('SelectInstructorPopup').value;
+    showAddClientToActivity(activityNoForInstructorChange);
+  }
+
   function getElementById(element: string): HTMLInputElement{
     return document.getElementById(element) as HTMLInputElement;
   }

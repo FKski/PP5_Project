@@ -1,12 +1,13 @@
 class Activity{
     constructor(){}
-ActivityNo : number = 0;
+    ActivityNo : number = 0;
     ActivityDay : string = "";
     ActivityHour : string = "";
     ClientsList : Array<Client> = [];
     Name : string = "";
     MaxClients : number = 0;
     SignedClients : number = 0;
+    InstructorNo:number = 0;
 
     GetFullDay = () =>{
         switch (this.ActivityDay) {
@@ -30,7 +31,12 @@ ActivityNo : number = 0;
     
 
     ActivityDetails = () =>{
-        return this.Name + " | Day: " + this.GetFullDay() + " | Hour: " + this.ActivityHour;
+        return this.Name + " | Day: " + this.GetFullDay() + " | Hour: " + this.ActivityHour ;
     }
+
+    ActivityDetailsForInstructor = () =>{
+        return this.Name + " | Day: " + this.GetFullDay() + " | Hour: " + this.ActivityHour ;
+    }
+
 
 }

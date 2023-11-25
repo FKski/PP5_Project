@@ -1,7 +1,7 @@
 "use strict";
-class Client {
+class Instructor {
     constructor() {
-        this.ClientNo = 0;
+        this.InstructorNo = 0;
         this.name = "";
         this.surname = "";
         this.street = "";
@@ -21,8 +21,8 @@ class Client {
                 return "Address: " + this.ZIP + ' ' + this.City + ', ' + this.street + " " + this.HouseNumber + '/' + this.FlatNumber;
             }
         };
-        this.clientDetails = () => {
-            return "No: " + this.ClientNo + ", " + this.name + " " + this.surname + ", " + this.actionAddr();
+        this.instructorDetails = () => {
+            return "No: " + this.InstructorNo + ", " + this.name + " " + this.surname + ", " + this.actionAddr();
         };
     }
 }
