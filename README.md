@@ -15,6 +15,7 @@ Project is created with:
 * NodeJS version: 20.10.0
 
 ## Setup
-If you want to see our project you have to download all files, than just open index.html file
+If you want to see our project you have to download all files, than just open index.html file.
+If you want to load some data just call 'generatePOC();' in the console.
 
 To unlock this app you will need a password. It's simple, just 'passwd'.
