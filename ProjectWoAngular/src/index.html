@@ -15,15 +15,13 @@
     
     <title>FitnessRoom</title>
   </head>
-  <body >
+  <body onload="generatePOC()">
 
     <div class="m-1" id="login">
-      <form>
-        <label for="unlockPasswd" class="form-label">Password</label>
+      <form onkeydown="return event.key != 'Enter';">
+        <label for="unlockPasswd" class="form-label">The app is locked, type the password:</label>
         <input type="password" id="unlockPasswd" class="form-control" aria-describedby="passwordHelpBlock">
-        <div class="m-1" id="passwordHelpBlock">
-          Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
-        </div>
+        <label class="m-1" id="wrongPass" style="display: none; color: red;">Wrong password! Try again.</label>
         <button class="btn btn-primary" type="button" id="LoginButton" onclick="(Login())">Unlock</button>
       </form>      
     </div>
