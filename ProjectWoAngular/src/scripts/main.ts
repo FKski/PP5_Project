@@ -109,6 +109,11 @@ function generatePOC() {
     instructors.forEach((e)=>{
         ul3.innerHTML += `<li class="list-group-item" onclick="editInstructorFunc(${e.InstructorNo })">${e.instructorDetails()}</li>`;
     })
+
+
+    ClientNo = 3;
+    activityNo = 1;
+    InstructorNo = 1;
 }
 
 function SaveClient() {
@@ -307,6 +312,11 @@ function editClientFunc(ClientNo:number){
       getElementById("menu").style.display = 'block';
       getElementById("login").style.display = 'none';
       getElementById("unlockPasswd").value = "";
+      getElementById("wrongPass").style.display = 'none';
+    }
+    else{
+      getElementById("wrongPass").style.display = 'block';
+
     }
   }
 
